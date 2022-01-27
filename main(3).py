@@ -10,7 +10,7 @@ BOT_TOKEN = " "
 API_ID = " "
 API_HASH = " "
 
-BOT_NAME = "cuttttter"
+BOT_NAME = "cuter"
 
 
 Bot = TelegramClient(BOT_NAME, API_ID, API_HASH).start(bot_token=BOT_TOKEN)
@@ -23,6 +23,28 @@ refresh_button = [
 ]
 msgid = 0
 chatid = 0
+def txtmsg():
+    text=f"سریال {s} {fa} قسمت {e} با زیرنویس فارسی" \
+         f"\nقسمت {ee} سریال {fa} {s} با زیرنویس چسبیده رایگان" \
+         f"\nقسمت {e} سریال {fa} - {s} با زیرنویس فارسی چسبیده دی ال مکوین" \
+         f"\nتماشای قسمت بعدی در کانال تلگرام ما :" \
+         f"\nhttps://t.me/joinchat/Rguc8ahmI2pnKElU" \
+         f"\n,سریال {fa}" \
+         f"\n,{fa}" \
+         f"\n,{fa}{e}" \
+         f"\n,سریال {fa}{e}" \
+         f"\n----------------------------------" \
+         f"\nزیرنویس چسبیده قسمت {e} سریال ترکی {fa} قسمت {e} {s}" \
+         f"\nقسمت {e} سریال {fa} با زیرنویس چسبیده قسمت {ee} {e} {s}" \
+         f"\nسریال {fa} {e} {s} قسمت {ee} با زینویس چسبیده" \
+         f"\nجهت دانلود تماشای کامل این قسمت کانال تلگرام دی ال مکوین شوید :" \
+         f"\nhttps://t.me/joinchat/Rguc8ahmI2pnKElU" \
+         f"\n,سریال {fa}" \
+         f"\n,{fa}" \
+         f"\n,{fa}{e}" \
+         f",سریال {fa}{e}"
+    return text
+
 @Bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def start(event):
     keyboard = []
@@ -103,7 +125,7 @@ async def callback(event):
             cut_steps.append(i * 10)
         for step in cut_steps:
             stp = str(end_sec + step)
-            os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str(step/10)+ext)}"''')
+            os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str((step/10)+1)+ext)}"''')
         await process_msg.delete()
         if chatid == 0:
             msg = await Bot.send_message(event.chat_id, 'Done! ' + name)
