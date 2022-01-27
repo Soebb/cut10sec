@@ -2,6 +2,7 @@ import os, datetime, glob, subprocess, json
 from telethon import TelegramClient, events, Button
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+import PTN
 
 previous_cut_time = '02:00:04'
 
@@ -125,12 +126,15 @@ async def callback(event):
             stp = str(end_sec + step)
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str((step/10)+1)+ext)}"''')
         await process_msg.delete()
+        info=PTN.parse(name.replace(ext, ''))
+        title = info['title']
+        fa_name = serial_name(title)[1].replace(' #','').replace('#',''
         if chatid == 0:
-            msg = await Bot.send_message(event.chat_id, 'Done! ' + name)
+            msg = await Bot.send_message(event.chat_id, 'Done! ' + txtmsg(episode,latin_name,fa_name))
             msgid = msg.id
         elif chatid != 0:
             try:
-                await Bot.edit_message(event.chat_id, msgid, 'Done! ' + name)
+                await Bot.edit_message(event.chat_id, msgid, txtmsg(episode,latin_name,fa_name))
             except:
                 await Bot.edit_message(event.chat_id, msgid, 'تمام')
         chatid = event.chat_id
