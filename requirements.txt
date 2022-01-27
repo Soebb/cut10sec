@@ -1,0 +1,4 @@
+telethon
+hachoir
+parse-torrent-name
+persiantools
