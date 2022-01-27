@@ -2,6 +2,7 @@ import os, datetime, glob, subprocess, json
 from telethon import TelegramClient, events, Button
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+from persiantools import digits
 import PTN
 
 previous_cut_time = '02:00:04'
@@ -24,7 +25,8 @@ refresh_button = [
 ]
 msgid = 0
 chatid = 0
-def txtmsg():
+def txtmsg(e,s,fa):
+    ee = digits.to_word(int(e)) + "م"
     text=f"سریال {s} {fa} قسمت {e} با زیرنویس فارسی" \
          f"\nقسمت {ee} سریال {fa} {s} با زیرنویس چسبیده رایگان" \
          f"\nقسمت {e} سریال {fa} - {s} با زیرنویس فارسی چسبیده دی ال مکوین" \
@@ -127,8 +129,11 @@ async def callback(event):
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str((step/10)+1)+ext)}"''')
         await process_msg.delete()
         info=PTN.parse(name.replace(ext, ''))
+        episode = str(info['episode'])
+        episode = episode.split('0', 1)[1] if episode.startswith('0') else episode
         title = info['title']
-        fa_name = serial_name(title)[1].replace(' #','').replace('#',''
+        fa_name = serial_name(title)[1].replace(' #','').replace('# ','').replace('_',' ')
+        latin_name = title.lower()
         if chatid == 0:
             msg = await Bot.send_message(event.chat_id, 'Done! ' + txtmsg(episode,latin_name,fa_name))
             msgid = msg.id
