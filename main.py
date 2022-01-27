@@ -119,14 +119,14 @@ async def callback(event):
 
         ext = '.' + name.rsplit('.', 1)[1]
         end_sec = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(end.split(":"))))
-        os.system(f'''ffmpeg -ss {start} -i "{input}" -to {end} -c copy "C:/dlmacvin/1aa/videos/{name.replace(ext, '-0'+ext)}"''')
+        os.system(f'''ffmpeg -ss {start} -i "{input}" -to {end} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-0'+ext)}"''')
         cut_steps = []
         dif = duration - int(end_sec)
         for i in range(dif // 10):
             cut_steps.append(i * 10)
         for step in cut_steps:
             stp = str(end_sec + step)
-            os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str((step/10)+1)+ext)}"''')
+            os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str((step/10)+1)+ext)}"''')
         await process_msg.delete()
         info=PTN.parse(name.replace(ext, ''))
         episode = str(info['episode'])
