@@ -51,7 +51,7 @@ async def start(event):
     keyboard.append(refresh_button)
     try:
         for file in glob.glob('C:/dlmacvin/1aa/*'):
-            try:
+            if file.endswith(('.ts', '.mp4', '.mkv')):
                 keyboard.append(
                     [
                         Button.inline(
@@ -60,9 +60,6 @@ async def start(event):
                         )
                     ]
                 )
-            except Exception as e:
-                print("problem with "+file)
-                pass
     except Exception as e:
         print(e)
         pass
@@ -77,15 +74,16 @@ async def callback(event):
         keyboard = []
         keyboard.append(refresh_button)
         try:
-            for file in glob.glob('C:/dlmacvin/1aa/*'):
-                keyboard.append(
-                    [
-                        Button.inline(
-                            file.rsplit('/', 1)[1].replace('1aa\\', ''),
-                            data=file.rsplit('/', 1)[1].replace('1aa\\', '')
-                        )
-                    ]
-                )
+            for file in glob.glob(vdir):
+                if file.endswith(('.ts', '.mp4', '.mkv')):
+                    keyboard.append(
+                        [
+                            Button.inline(
+                                file.rsplit('/', 1)[1].replace(main, ''),
+                                data=file.rsplit('/', 1)[1].replace(main, '')
+                            )
+                        ]
+                    )
         except Exception as e:
             print(e)
             return
