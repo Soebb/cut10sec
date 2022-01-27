@@ -77,7 +77,7 @@ async def callback(event):
         keyboard = []
         keyboard.append(refresh_button)
         try:
-            for file in glob.glob(vdir):
+            for file in glob.glob('C:/dlmacvin/1aa/*'):
                 if file.endswith(('.ts', '.mp4', '.mkv')):
                     keyboard.append(
                         [
