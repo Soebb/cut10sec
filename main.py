@@ -4,6 +4,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from persiantools import digits
 import PTN
+import keyboard
 
 previous_cut_time = '02:00:04'
 
@@ -48,14 +49,24 @@ def txtmsg(e,s,fa):
          f",سریال {fa}{e}"
     return text
 
+@Bot.on(events.NewMessage(incoming=True, pattern="^/cancel"))
+async def to_cancel(event):
+
+@Bot.on(events.NewMessage(incoming=True, pattern="^/stop"))
+async def to_stop(event):
+
+@Bot.on(events.NewMessage(incoming=True, pattern="^/resume"))
+async def to_resume(event):
+
+
 @Bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def start(event):
-    keyboard = []
-    keyboard.append(refresh_button)
+    keyboardd = []
+    keyboardd.append(refresh_button)
     try:
         for file in glob.glob('C:/dlmacvin/1aa/*'):
             if file.endswith(('.ts', '.mp4', '.mkv')):
-                keyboard.append(
+                keyboardd.append(
                     [
                         Button.inline(
                             file.rsplit('/', 1)[1].replace('1aa\\', ''),
@@ -66,20 +77,20 @@ async def start(event):
     except Exception as e:
         print(e)
         pass
-    keyboard.append(refresh_button)
-    await event.reply("Which one?", buttons=keyboard)
+    keyboardd.append(refresh_button)
+    await event.reply("Which one?", buttons=keyboardd)
 
 
 @Bot.on(events.CallbackQuery)
 async def callback(event):
     global msgid, previous_cut_time, chatid
     if event.data == b"refresh":
-        keyboard = []
-        keyboard.append(refresh_button)
+        keyboardd = []
+        keyboardd.append(refresh_button)
         try:
             for file in glob.glob('C:/dlmacvin/1aa/*'):
                 if file.endswith(('.ts', '.mp4', '.mkv')):
-                    keyboard.append(
+                    keyboardd.append(
                         [
                             Button.inline(
                                 file.rsplit('/', 1)[1].replace(main, ''),
@@ -90,9 +101,9 @@ async def callback(event):
         except Exception as e:
             print(e)
             return
-        keyboard.append(refresh_button)
+        keyboardd.append(refresh_button)
         try:
-            await event.edit(f"Which one of these {len(keyboard)} videos?", buttons=keyboard)
+            await event.edit(f"Which one of these {len(keyboard)} videos?", buttons=keyboardd)
         except:
             await Bot.send_message(event.chat_id, "error!! Send /start")
         return
