@@ -4,7 +4,10 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from persiantools import digits
 import PTN
-import keyboard
+import keyboard as kb
+import pygetwindow as gw
+
+win = gw.getActiveWindow()
 
 previous_cut_time = '02:00:04'
 
@@ -14,7 +17,6 @@ API_ID = " "
 API_HASH = " "
 
 BOT_NAME = "cuter"
-
 
 Bot = TelegramClient(BOT_NAME, API_ID, API_HASH).start(bot_token=BOT_TOKEN)
 
@@ -26,6 +28,7 @@ refresh_button = [
 ]
 msgid = 0
 chatid = 0
+
 def txtmsg(e,s,fa):
     ee = digits.to_word(int(e)) + "م"
     text=f"سریال {s} {fa} قسمت {e} با زیرنویس فارسی" \
@@ -51,7 +54,7 @@ def txtmsg(e,s,fa):
 
 @Bot.on(events.NewMessage(incoming=True, pattern="^/cancel"))
 async def to_cancel(event):
-
+    
 @Bot.on(events.NewMessage(incoming=True, pattern="^/stop"))
 async def to_stop(event):
 
@@ -126,7 +129,7 @@ async def callback(event):
         start = "00:00:00"
         await time.delete()
         await ask.delete()
-        process_msg = await Bot.send_message(event.chat_id, "processing..")
+        process_msg = await Bot.send_message(event.chat_id, "processing..\nFor cancel, send /cancel\nFor stop, send /stop")
 
         ext = '.' + name.rsplit('.', 1)[1]
         end_sec = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(end.split(":"))))
