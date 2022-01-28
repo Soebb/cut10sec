@@ -1,4 +1,6 @@
 telethon
 hachoir
+keyboard
+pygetwindow
 parse-torrent-name
 persiantools
