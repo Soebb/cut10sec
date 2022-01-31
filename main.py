@@ -163,7 +163,12 @@ async def callback(event):
         os.system(f'''ffmpeg -ss {start} -i "{input}" -to {end} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-0'+ext)}"''')
         if upload2namasha_option:
             global chrome_win
-            
+            if not chrome_win in gw.getAllWindows():
+                driver.get(url)
+                chrome_win = gw.getActiveWindow()
+                driver.find_element(By.ID, "UserName").send_keys(username)
+                driver.find_element(By.ID, "Password").send_keys(password)
+                driver.find_element(By.XPATH, "//button[@type='submit']").click()
         cut_steps = []
         dif = duration - int(end_sec)
         for i in range(dif // 10):
