@@ -203,7 +203,7 @@ async def callback(event):
         fa_name = serial_name(title)[1].replace(' #','').replace('# ','').replace('_',' ')
         latin_name = title.lower()
         if chatid == 0:
-            msg = await Bot.send_message(event.chat_id, 'Done! ' + txtmsg(episode,latin_name,fa_name))
+            msg = await Bot.send_message(event.chat_id, txtmsg(episode,latin_name,fa_name))
             msgid = msg.id
         elif chatid != 0:
             try:
