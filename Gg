@@ -1,0 +1,24 @@
+import time
+import keyboard
+import selenium.webdriver as webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
+username=""
+password=""
+url="https://www.namasha.com/upload"
+driver_path=""
+ser=Service(driver_path)
+driver=webdriver.Chrome(service=ser)
+driver.get(url)
+driver.find_element(By.ID, "UserName").send_keys(username)
+driver.find_element(By.ID, "Password").send_keys(password)
+driver.find_element(By.XPATH, "//button[@type='submit']").click()
+driver.execute_script('window.open("https://www.namasha.com/upload")')
+driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
+time.sleep(2)
+video=""
+keyboard.write(video)
+keyboard.press_and_release('enter')
+time.sleep(2)
+driver.find_element(By.XPATH, '//input[@name="Title"]').send_keys()
