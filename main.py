@@ -6,9 +6,6 @@ from persiantools import digits
 import PTN
 import keyboard as kb
 import pygetwindow as gw
-import selenium.webdriver as webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 
 BOT_TOKEN = " "
 API_ID = " "
@@ -19,7 +16,7 @@ BOT_NAME = "cuter"
 driver_path = r""
 
 # namasha upload option
-upload2namasha_option = True
+upload2namasha_option = False
 url = "https://www.namasha.com/upload"
 username = ""
 password = ""
@@ -27,6 +24,9 @@ password = ""
 win = gw.getActiveWindow()
 
 if upload2namasha_option:
+    import selenium.webdriver as webdriver
+    from selenium.webdriver.chrome.service import Service
+    from selenium.webdriver.common.by import By
     ser=Service(driver_path)
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
