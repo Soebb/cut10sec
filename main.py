@@ -6,16 +6,25 @@ from persiantools import digits
 import PTN
 import keyboard as kb
 import pygetwindow as gw
+import selenium.webdriver as webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
+# system path to chromedriver.exe
+driver_path = r""
+
+# namasha.com related
+url = "https://www.namasha.com/upload"
+username = ""
+password = ""
 
 win = gw.getActiveWindow()
 
 previous_cut_time = '02:00:04'
 
-
 BOT_TOKEN = " "
 API_ID = " "
 API_HASH = " "
-
 BOT_NAME = "cuter"
 
 Bot = TelegramClient(BOT_NAME, API_ID, API_HASH).start(bot_token=BOT_TOKEN)
@@ -55,7 +64,7 @@ def txtmsg(e,s,fa):
 @Bot.on(events.NewMessage(incoming=True, pattern="^/cancel"))
 async def to_cancel(event):
     await event.reply('canceled.')
-    exit()
+    exit(0)
 
 @Bot.on(events.NewMessage(incoming=True, pattern="^/stop"))
 async def to_stop(event):
