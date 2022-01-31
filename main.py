@@ -162,10 +162,13 @@ async def callback(event):
         end_sec = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(end.split(":"))))
         os.system(f'''ffmpeg -ss {start} -i "{input}" -to {end} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-0'+ext)}"''')
         if upload2namasha_option:
-            tabs = driver.window_handles
-            for tab in range(1, len(tabs)):
-                d
-                driver.close()
+            try:
+                tabs = driver.window_handles
+                for tab in range(1, len(tabs)):
+                    driver.switch_to.window(tabs[tab])
+                    driver.close()
+            except Exception as e:
+                print(e)
             global chrome_win
             if not chrome_win in gw.getAllWindows():
                 driver.get(url)
