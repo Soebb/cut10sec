@@ -1,4 +1,4 @@
-import os, datetime, glob, subprocess, json, time
+import os, datetime, glob, subprocess, json, time, asyncio
 from telethon import TelegramClient, events, Button
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -183,6 +183,16 @@ async def callback(event):
         for step in cut_steps:
             stp = str(end_sec + step)
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-'+str((step/10)+1)+ext)}"''')
+            if upload2namasha_option:
+                driver.execute_script('window.open("https://www.namasha.com/upload")')
+                driver.switch_to.window(len(driver.window_handles))
+                driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
+                asyncio.sleep(2)
+                keyboard.write(video_path)
+                keyboard.press_and_release('enter')
+                asyncio.sleep(2)
+                driver.find_element(By.XPATH, '//input[@name="Title"]').send_keys()
+
         await process_msg.delete()
         info=PTN.parse(name.replace(ext, ''))
         episode = str(info['episode'])
