@@ -26,6 +26,12 @@ password = ""
 
 win = gw.getActiveWindow()
 
+if upload2namasha_option:
+    ser=Service(driver_path)
+    driver=webdriver.Chrome(service=ser)
+    driver.get(url)
+    chrome_win = gw.getActiveWindow()
+
 previous_cut_time = '02:00:04'
 
 Bot = TelegramClient(BOT_NAME, API_ID, API_HASH).start(bot_token=BOT_TOKEN)
