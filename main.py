@@ -10,26 +10,23 @@ import selenium.webdriver as webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-# system path to chromedriver.exe
-driver_path = r""
-
-# upload to namasha option
-url = "https://www.namasha.com/upload"
-## set to False to unable, or True to enable this option
-upload2namasha_option = True
-## your namasha.com username & password
-username = ""
-password = ""
-
-
-win = gw.getActiveWindow()
-
-previous_cut_time = '02:00:04'
-
 BOT_TOKEN = " "
 API_ID = " "
 API_HASH = " "
 BOT_NAME = "cuter"
+
+# system path to chromedriver.exe
+driver_path = r""
+
+# namasha upload option
+upload2namasha_option = True
+url = "https://www.namasha.com/upload"
+username = ""
+password = ""
+
+win = gw.getActiveWindow()
+
+previous_cut_time = '02:00:04'
 
 Bot = TelegramClient(BOT_NAME, API_ID, API_HASH).start(bot_token=BOT_TOKEN)
 
