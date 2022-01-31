@@ -1,4 +1,4 @@
-import os, datetime, glob, subprocess, json
+import os, datetime, glob, subprocess, json, time
 from telethon import TelegramClient, events, Button
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -13,10 +13,14 @@ from selenium.webdriver.common.by import By
 # system path to chromedriver.exe
 driver_path = r""
 
-# namasha.com related
+# upload to namasha option
 url = "https://www.namasha.com/upload"
+## set to False to unable, or True to enable this option
+upload2namasha_option = True
+## your namasha.com username & password
 username = ""
 password = ""
+
 
 win = gw.getActiveWindow()
 
