@@ -187,6 +187,7 @@ async def callback(event):
             if upload2namasha_option:
                 driver.execute_script('window.open("https://www.namasha.com/upload")')
                 driver.switch_to.window(len(driver.window_handles))
+                chrome_win.activate()
                 driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
                 asyncio.sleep(2)
                 keyboard.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
