@@ -123,8 +123,8 @@ async def callback(event):
                     keyboardd.append(
                         [
                             Button.inline(
-                                file.rsplit('/', 1)[1].replace(main, ''),
-                                data=file.rsplit('/', 1)[1].replace(main, '')
+                                file.rsplit('/', 1)[1].replace('1aa\\', ''),
+                                data=file.rsplit('/', 1)[1].replace('1aa\\', '')
                             )
                         ]
                     )
