@@ -28,7 +28,9 @@ win = gw.getActiveWindow()
 
 if upload2namasha_option:
     ser=Service(driver_path)
-    driver=webdriver.Chrome(service=ser)
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver=webdriver.Chrome(service=ser, option=options)
     driver.get(url)
     chrome_win = gw.getActiveWindow()
     driver.find_element(By.ID, "UserName").send_keys(username)
