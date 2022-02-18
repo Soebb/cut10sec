@@ -29,7 +29,7 @@ password = ""
 
 win = gw.getActiveWindow()
 
-firefox_win = "none" #this will be a dynamic variable to store the Firefox window whenever be opened
+firefox_win = win #this will be a dynamic variable to store the Firefox window whenever be opened
 if upload2namasha_option:
     os.environ['MOZ_FORCE_DISABLE_E105'] = Firefox_version
     ser=Service(driver_path)
@@ -166,7 +166,7 @@ async def callback(event):
         end_sec = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(end.split(":"))))
         os.system(f'''ffmpeg -ss {start} -i "{input}" -to {end} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-0'+ext)}"''')
         if upload2namasha_option:
-            if firefox_win != "none":
+            if firefox_win != win:
                 try:
                     firefox_win.close()
                 except:
