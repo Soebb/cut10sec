@@ -32,10 +32,7 @@ win = gw.getActiveWindow()
 firefox_win = win #this will be a dynamic variable to store the Firefox window whenever be opened
 if upload2namasha_option:
     os.environ['MOZ_FORCE_DISABLE_E105'] = Firefox_version
-    ser=Service(driver_path)
-    options = webdriver.FirefoxOptions()
-    #options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver=webdriver.Firefox(service=ser, options=options)
+
 
 previous_cut_time = '02:00:04'
 
@@ -171,6 +168,7 @@ async def callback(event):
                     firefox_win.close()
                 except:
                     pass
+            driver=webdriver.Firefox(service=Service(driver_path), options=webdriver.FirefoxOptions())
             driver.get(url)
             firefox_win = gw.getActiveWindow()
             driver.find_element(By.ID, "UserName").send_keys(username)
@@ -186,16 +184,16 @@ async def callback(event):
             cut_name = name.replace(ext, '-'+str((step/10)+1)+ext)
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy -y "C:/dlmacvin/1aa/videos/{cut_name}"''')
             if upload2namasha_option:
-                driver.find_element(By.TAG_NAME, 'body').send_keys(Key.CONTROL + 't')
-                #asyncio.sleep(1)
+                driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL + 't')
+                #await asyncio.sleep(1)
                 driver.switch_to.window(driver.window_handles[-1])
                 driver.get(url)
                 firefox_win.activate()
                 driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
-                asyncio.sleep(3)
-                keyboard.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
-                keyboard.press_and_release('enter')
-                asyncio.sleep(3)
+                await asyncio.sleep(3)
+                kb.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
+                kb.press_and_release('enter')
+                await asyncio.sleep(3)
                 driver.find_element(By.XPATH, '//input[@name="Title"]').send_keys(cut_name)
 
         await process_msg.delete()
