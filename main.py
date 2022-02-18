@@ -9,8 +9,6 @@ import pygetwindow as gw
 import selenium.webdriver as webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 BOT_TOKEN = " "
 API_ID = " "
@@ -27,19 +25,16 @@ url = "https://www.namasha.com/upload"
 username = ""
 password = ""
 
+
 win = gw.getActiveWindow()
 
+firefox_win = "none" #this will be a dynamic variable to store the Firefox window that will be opened
 if upload2namasha_option:
     os.environ['MOZ_FORCE_DISABLE_E105'] = Firefox_version
     ser=Service(driver_path)
     options = webdriver.FirefoxOptions()
     #options.add_experimental_option('excludeSwitches', ['enable-logging'])
     driver=webdriver.Firefox(service=ser, options=options)
-    driver.get(url)
-    firefox_win = gw.getActiveWindow()
-    driver.find_element(By.ID, "UserName").send_keys(username)
-    driver.find_element(By.ID, "Password").send_keys(password)
-    driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
 previous_cut_time = '02:00:04'
 
@@ -121,7 +116,7 @@ async def start(event):
 
 @Bot.on(events.CallbackQuery)
 async def callback(event):
-    global msgid, previous_cut_time, chatid
+    global msgid, previous_cut_time, chatid, firefox_win
     if event.data == b"refresh":
         keyboardd = []
         keyboardd.append(refresh_button)
@@ -170,20 +165,17 @@ async def callback(event):
         end_sec = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(end.split(":"))))
         os.system(f'''ffmpeg -ss {start} -i "{input}" -to {end} -c copy -y "C:/dlmacvin/1aa/videos/{name.replace(ext, '-0'+ext)}"''')
         if upload2namasha_option:
-            try:
-                tabs = driver.window_handles
-                for tab in range(1, len(tabs)):
-                    driver.switch_to.window(tabs[tab])
-                    driver.close()
-            except Exception as e:
-                print(e)
-            global firefox_win
-            if not firefox_win in gw.getAllWindows():
-                driver.get(url)
-                firefox_win = gw.getActiveWindow()
-                driver.find_element(By.ID, "UserName").send_keys(username)
-                driver.find_element(By.ID, "Password").send_keys(password)
-                driver.find_element(By.XPATH, "//button[@type='submit']").click()
+            if firefox_win != "none":
+                try:
+                    firefox_win.close()
+                except:
+                    pass
+            driver.get(url)
+            firefox_win = gw.getActiveWindow()
+            driver.find_element(By.ID, "UserName").send_keys(username)
+            driver.find_element(By.ID, "Password").send_keys(password)
+            driver.find_element(By.XPATH, "//button[@type='submit']").click()
+
         cut_steps = []
         dif = duration - int(end_sec)
         for i in range(dif // 10):
@@ -193,16 +185,16 @@ async def callback(event):
             cut_name = name.replace(ext, '-'+str((step/10)+1)+ext)
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy -y "C:/dlmacvin/1aa/videos/{cut_name}"''')
             if upload2namasha_option:
-                tabs = driver.window_handles
-                driver.execute_script('window.open("https://www.namasha.com/upload")')
-                WebDriverWait(driver, 20).until(EC.new_window_is_opened(tabs))
-                
+                driver.find_element(By.TAG_NAME, 'body').send_keys(Key.CONTROL + 't')
+                #asyncio.sleep(1)
+                driver.switch_to.window(driver.window_handles[-1])
+                driver.get(url)
                 firefox_win.activate()
                 driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
-                asyncio.sleep(2)
+                asyncio.sleep(5)
                 keyboard.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
                 keyboard.press_and_release('enter')
-                asyncio.sleep(2)
+                asyncio.sleep(5)
                 driver.find_element(By.XPATH, '//input[@name="Title"]').send_keys(cut_name)
 
         await process_msg.delete()
