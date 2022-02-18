@@ -9,6 +9,8 @@ import pygetwindow as gw
 import selenium.webdriver as webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 BOT_TOKEN = " "
 API_ID = " "
@@ -34,7 +36,7 @@ if upload2namasha_option:
     #options.add_experimental_option('excludeSwitches', ['enable-logging'])
     driver=webdriver.Firefox(service=ser, options=options)
     driver.get(url)
-    chrome_win = gw.getActiveWindow()
+    firefox_win = gw.getActiveWindow()
     driver.find_element(By.ID, "UserName").send_keys(username)
     driver.find_element(By.ID, "Password").send_keys(password)
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
@@ -175,10 +177,10 @@ async def callback(event):
                     driver.close()
             except Exception as e:
                 print(e)
-            global chrome_win
-            if not chrome_win in gw.getAllWindows():
+            global firefox_win
+            if not firefox_win in gw.getAllWindows():
                 driver.get(url)
-                chrome_win = gw.getActiveWindow()
+                firefox_win = gw.getActiveWindow()
                 driver.find_element(By.ID, "UserName").send_keys(username)
                 driver.find_element(By.ID, "Password").send_keys(password)
                 driver.find_element(By.XPATH, "//button[@type='submit']").click()
@@ -191,9 +193,11 @@ async def callback(event):
             cut_name = name.replace(ext, '-'+str((step/10)+1)+ext)
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy -y "C:/dlmacvin/1aa/videos/{cut_name}"''')
             if upload2namasha_option:
+                tabs = driver.window_handles
                 driver.execute_script('window.open("https://www.namasha.com/upload")')
-                driver.switch_to.window(len(driver.window_handles))
-                chrome_win.activate()
+                WebDriverWait(driver, 20).until(EC.new_window_is_opened(tabs))
+                
+                firefox_win.activate()
                 driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
                 asyncio.sleep(2)
                 keyboard.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
