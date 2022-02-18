@@ -189,7 +189,7 @@ async def callback(event):
                 driver.switch_to.window(driver.window_handles[-1])
                 driver.get(url)
                 firefox_win.activate()
-                driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
+                driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']").click()
                 await asyncio.sleep(3)
                 kb.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
                 kb.press_and_release('enter')
