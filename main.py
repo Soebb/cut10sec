@@ -6,17 +6,21 @@ from persiantools import digits
 import PTN
 import keyboard as kb
 import pygetwindow as gw
+import selenium.webdriver as webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 
 BOT_TOKEN = " "
 API_ID = " "
 API_HASH = " "
 BOT_NAME = "cuter"
 
-# system path to chromedriver.exe
+# system path to geckodriver.exe
 driver_path = r""
+Firefox_version = "97.0.1"
 
 # namasha upload option
-upload2namasha_option = False
+upload2namasha_option = True
 url = "https://www.namasha.com/upload"
 username = ""
 password = ""
@@ -24,12 +28,10 @@ password = ""
 win = gw.getActiveWindow()
 
 if upload2namasha_option:
-    import selenium.webdriver as webdriver
-    from selenium.webdriver.chrome.service import Service
-    from selenium.webdriver.common.by import By
+    
     ser=Service(driver_path)
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options = Options()
+    #options.add_experimental_option('excludeSwitches', ['enable-logging'])
     driver=webdriver.Chrome(service=ser, options=options)
     driver.get(url)
     chrome_win = gw.getActiveWindow()
