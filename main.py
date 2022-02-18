@@ -13,9 +13,9 @@ from selenium.webdriver.common.by import By
 BOT_TOKEN = " "
 API_ID = " "
 API_HASH = " "
-BOT_NAME = "cuter"
+BOT_NAME = "cuter-RoBot"
 
-# system path to geckodriver.exe
+# system path to geckodriver.exe (Firefox driver)
 driver_path = r""
 Firefox_version = "97.0.1"
 
@@ -28,11 +28,11 @@ password = ""
 win = gw.getActiveWindow()
 
 if upload2namasha_option:
-    
+    os.environ['MOZ_FORCE_DISABLE_E105'] = Firefox_version
     ser=Service(driver_path)
-    options = Options()
+    options = webdriver.FirefoxOptions()
     #options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver=webdriver.Chrome(service=ser, options=options)
+    driver=webdriver.Firefox(service=ser, options=options)
     driver.get(url)
     chrome_win = gw.getActiveWindow()
     driver.find_element(By.ID, "UserName").send_keys(username)
