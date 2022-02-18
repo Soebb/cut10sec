@@ -28,7 +28,7 @@ password = ""
 
 win = gw.getActiveWindow()
 
-firefox_win = "none" #this will be a dynamic variable to store the Firefox window that will be opened
+firefox_win = "none" #this will be a dynamic variable to store the Firefox window whenever be opened
 if upload2namasha_option:
     os.environ['MOZ_FORCE_DISABLE_E105'] = Firefox_version
     ser=Service(driver_path)
