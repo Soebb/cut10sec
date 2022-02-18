@@ -191,10 +191,10 @@ async def callback(event):
                 driver.get(url)
                 firefox_win.activate()
                 driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")
-                asyncio.sleep(5)
+                asyncio.sleep(3)
                 keyboard.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
                 keyboard.press_and_release('enter')
-                asyncio.sleep(5)
+                asyncio.sleep(3)
                 driver.find_element(By.XPATH, '//input[@name="Title"]').send_keys(cut_name)
 
         await process_msg.delete()
