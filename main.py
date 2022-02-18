@@ -7,7 +7,7 @@ import PTN
 import keyboard as kb
 import pygetwindow as gw
 import selenium.webdriver as webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 
 BOT_TOKEN = " "
