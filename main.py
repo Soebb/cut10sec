@@ -18,7 +18,7 @@ BOT_NAME = "cuter-RoBot"
 
 # system path to geckodriver.exe (Firefox driver)
 driver_path = r"C:\Program Files\Mozilla Firefox\geckodriver.exe"
-Firefox_version = "97.0.1"
+Firefox_version = ""
 
 # namasha upload option
 upload2namasha_option = True
