@@ -186,8 +186,6 @@ async def callback(event):
             cut_name = name.replace(ext, '-'+str((step/10)+1)+ext)
             os.system(f'''ffmpeg -ss {start} -i "{input}" -to {stp} -c copy -y "C:/dlmacvin/1aa/videos/{cut_name}"''')
             if upload2namasha_option:
-                driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL + 't')
-                #await asyncio.sleep(1)
                 driver.switch_to.window(driver.window_handles[-1])
                 driver.get(url)
                 firefox_win.activate()
@@ -197,7 +195,7 @@ async def callback(event):
                 kb.press_and_release('enter')
                 await asyncio.sleep(3)
                 driver.find_element(By.XPATH, '//input[@name="Title"]').send_keys(cut_name)
-
+                kb.press_and_release('control'+'t')
         await process_msg.delete()
         info=PTN.parse(name.replace(ext, '').replace(' - ', ' ').replace(' _ ', ' ').replace('-', ' ').replace('_', ' ').replace('  ', ' '))
         episode = str(info['episode'])
