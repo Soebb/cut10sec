@@ -10,6 +10,8 @@ import selenium.webdriver as webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 BOT_TOKEN = " "
 API_ID = " "
@@ -189,7 +191,8 @@ async def callback(event):
                 driver.switch_to.window(driver.window_handles[-1])
                 driver.get(url)
                 firefox_win.activate()
-                driver.find_element(By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']").click()
+                upload_button_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='btn btn-primary mt-4 px-3 py-2']")))
+                upload_button_element.click()
                 await asyncio.sleep(3)
                 kb.write("C:\\dlmacvin\\1aa\\videos\\"+cut_name)
                 kb.press_and_release('enter')
